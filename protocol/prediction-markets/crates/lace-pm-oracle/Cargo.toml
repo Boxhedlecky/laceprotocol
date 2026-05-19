@@ -1,0 +1,14 @@
+[package]
+name = "lace-pm-oracle"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Resolution and dispute machinery for the Lace prediction market engine."
+authors.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+lace-pm-types = { workspace = true }
+lace-pm-markets = { workspace = true }

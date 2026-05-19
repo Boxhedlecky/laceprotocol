@@ -1,0 +1,16 @@
+[package]
+name = "lace-pm-markets"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Market types and state machine for the Lace prediction market engine."
+authors.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+lace-pm-types = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }

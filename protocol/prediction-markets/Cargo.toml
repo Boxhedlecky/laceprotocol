@@ -1,0 +1,45 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/lace-pm-types",
+    "crates/lace-pm-markets",
+    "crates/lace-pm-amm",
+    "crates/lace-pm-oracle",
+    "crates/lace-pm-compose",
+    "crates/lace-pm-governance",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.95"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/Boxhedlecky/laceprotocol"
+description = "Lace Protocol -- prediction market engine"
+authors = ["Lace Protocol contributors"]
+
+[workspace.dependencies]
+# Stable serialisation of market state, positions, resolutions.
+serde = { version = "1", default-features = false, features = ["derive", "alloc"] }
+
+# Opaque 32-byte identifiers (market id, outcome id, validator id, oracle ref).
+hex = "0.4"
+
+# Property tests for AMM invariants and resolution monotonicity.
+proptest = "1"
+
+# Internal crates.
+lace-pm-types      = { path = "crates/lace-pm-types" }
+lace-pm-markets    = { path = "crates/lace-pm-markets" }
+lace-pm-amm        = { path = "crates/lace-pm-amm" }
+lace-pm-oracle     = { path = "crates/lace-pm-oracle" }
+lace-pm-compose    = { path = "crates/lace-pm-compose" }
+lace-pm-governance = { path = "crates/lace-pm-governance" }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+
+[profile.dev]
+opt-level = 1
