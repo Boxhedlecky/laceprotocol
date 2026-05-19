@@ -267,8 +267,8 @@ pub fn scalar_to_probability(lo: i128, hi: i128, s: i128) -> Probability {
     if s >= hi {
         return Probability::ONE;
     }
-    let num = (s - lo) as i128;
-    let den = (hi - lo) as i128;
+    let num = s - lo;
+    let den = hi - lo;
     // Convert to basis points with integer math to keep this
     // deterministic across architectures.
     let bps = (num.saturating_mul(10_000) / den) as u32;

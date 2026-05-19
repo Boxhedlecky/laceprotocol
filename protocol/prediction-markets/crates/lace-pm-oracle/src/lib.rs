@@ -144,16 +144,20 @@ impl ResolutionRound {
             .collect();
 
         for o in outcomes {
-            let stake_share_bps = if total_stake == 0 {
-                0
-            } else {
-                (stake_by_outcome.get(&o).copied().unwrap_or(0) * 10_000) / total_stake
-            };
-            let rep_share_bps = if total_rep == 0 {
-                0
-            } else {
-                (rep_by_outcome.get(&o).copied().unwrap_or(0) * 10_000) / total_rep
-            };
+            let stake_share_bps = stake_by_outcome
+                .get(&o)
+                .copied()
+                .unwrap_or(0)
+                .checked_mul(10_000)
+                .and_then(|x| x.checked_div(total_stake))
+                .unwrap_or(0);
+            let rep_share_bps = rep_by_outcome
+                .get(&o)
+                .copied()
+                .unwrap_or(0)
+                .checked_mul(10_000)
+                .and_then(|x| x.checked_div(total_rep))
+                .unwrap_or(0);
             let mixed = (alpha * stake_share_bps + (10_000 - alpha) * rep_share_bps) / 10_000;
             out.insert(
                 o,
@@ -474,9 +478,6 @@ mod tests {
 
     fn addr(b: u8) -> Address {
         Address(Bytes32([b; 32]))
-    }
-    fn out(b: u8) -> OutcomeId {
-        OutcomeId(Bytes32([b; 32]))
     }
 
     fn mk_market() -> Market {
