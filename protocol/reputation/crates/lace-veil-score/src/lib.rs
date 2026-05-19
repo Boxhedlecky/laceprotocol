@@ -420,11 +420,17 @@ impl VeilEngine {
     }
 
     fn recompute_attestation_bps(state: &AddressState) -> u32 {
-        // The attestation sub-engine is responsible for sybil-weighting
-        // each contribution; here we just smoothly saturate the bps
-        // total. 20_000 bps of attestation weight = full credit.
+        // Attestations are a positive-only signal: a wallet with no
+        // attestations sits at neutral (5_000), and each unit of
+        // saturated attestation weight lifts the component toward
+        // 10_000. Revocations / decay reduce the underlying
+        // attestation_weight_bps, which symmetrically lowers the
+        // component back toward 5_000 -- but never below it.
+        // (Bad-faith attestation behaviour penalises the *attester*,
+        // not the subject; see lace-veil-attest.)
         let saturated = state.attestation_weight_bps.min(20_000);
-        (saturated * 10_000 / 20_000) as u32
+        let lift = (saturated * 5_000 / 20_000) as u32;
+        5_000u32.saturating_add(lift)
     }
 
     fn recompute_tenure_bps(state: &AddressState, now: BlockHeight, sat: SaturationParams) -> u32 {
@@ -549,7 +555,31 @@ mod tests {
             at: 100,
         });
         let s = e.state_of(&addr(3)).unwrap();
+        // Saturation lifts neutral 5_000 by a full 5_000.
         assert_eq!(s.attestation_bps, 10_000);
+    }
+
+    #[test]
+    fn no_attestations_keeps_component_at_neutral() {
+        let mut e = VeilEngine::default();
+        e.ingest(ScoreEvent::FirstSeen {
+            subject: addr(20),
+            at: 100,
+        });
+        assert_eq!(e.state_of(&addr(20)).unwrap().attestation_bps, 5_000);
+    }
+
+    #[test]
+    fn small_attestation_lifts_modestly_above_neutral() {
+        let mut e = VeilEngine::default();
+        e.ingest(ScoreEvent::AttestationPosted {
+            subject: addr(21),
+            attester: addr(22),
+            weight_bps: 4_000, // 20 % of saturation
+            at: 100,
+        });
+        // Lift = 4_000 * 5_000 / 20_000 = 1_000.
+        assert_eq!(e.state_of(&addr(21)).unwrap().attestation_bps, 6_000);
     }
 
     #[test]

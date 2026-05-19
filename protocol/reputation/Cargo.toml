@@ -8,6 +8,7 @@ members = [
     "crates/lace-veil-stake",
     "crates/lace-veil-lending",
     "crates/lace-veil-governance",
+    "crates/lace-veil-integration",
 ]
 
 [workspace.package]

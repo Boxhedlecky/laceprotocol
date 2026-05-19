@@ -1,0 +1,25 @@
+[package]
+name = "lace-veil-integration"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Cross-crate integration tests for the Lace reputation / Veil Score system."
+authors.workspace = true
+publish = false
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+lace-veil-types      = { workspace = true }
+lace-veil-score      = { workspace = true }
+lace-veil-proofs     = { workspace = true }
+lace-veil-attest     = { workspace = true }
+lace-veil-stake      = { workspace = true }
+lace-veil-lending    = { workspace = true }
+lace-veil-governance = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }

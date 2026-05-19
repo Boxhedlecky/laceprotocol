@@ -172,6 +172,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "lace-veil-integration"
+version = "0.1.0"
+dependencies = [
+ "lace-veil-attest",
+ "lace-veil-governance",
+ "lace-veil-lending",
+ "lace-veil-proofs",
+ "lace-veil-score",
+ "lace-veil-stake",
+ "lace-veil-types",
+ "proptest",
+]
+
+[[package]]
 name = "lace-veil-lending"
 version = "0.1.0"
 dependencies = [
