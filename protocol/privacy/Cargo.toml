@@ -1,0 +1,62 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/lace-primitives",
+]
+
+# Crates that will land in subsequent commits:
+#   crates/lace-notes        -- Note structure, commitment, encryption, nullifiers
+#   crates/lace-tree         -- Merkle commitment tree + nullifier sparse Merkle tree
+#   crates/lace-circuits     -- Halo2 circuits (Spend, Output, Shield, Unshield, PrivateInvoke)
+#   crates/lace-disclosure   -- Four disclosure key types
+#   crates/lace-aggregator   -- Recursive proof batching
+#   crates/lace-privacy      -- Top-level API, re-exports
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.95"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/Boxhedlecky/laceprotocol"
+description = "Lace Protocol -- ZK privacy layer"
+authors = ["Lace Protocol contributors"]
+
+[workspace.dependencies]
+# Curve / field primitives. halo2curves 0.6 exposes bn256::Fr (the
+# BN254 scalar field) and the JubJub embedded curve via halo2curves::jubjub.
+halo2curves = { version = "0.6", default-features = false }
+ff = { version = "0.13", default-features = false }
+group = { version = "0.13", default-features = false }
+
+# Constant-time primitives.
+subtle = { version = "2.5", default-features = false }
+
+# Hashing / KDF (out-of-circuit).
+blake2 = { version = "0.10", default-features = false }
+sha2 = { version = "0.10", default-features = false }
+
+# Authenticated encryption for note ciphertexts.
+chacha20poly1305 = { version = "0.10", default-features = false, features = ["alloc"] }
+
+# X25519 for note key agreement.
+x25519-dalek = { version = "2", default-features = false }
+
+# Serialization (transaction wire format).
+serde = { version = "1", default-features = false, features = ["derive", "alloc"] }
+serde_bytes = "0.11"
+
+# RNG for off-circuit randomness (note nonces, ephemeral keys).
+rand_core = { version = "0.6", default-features = false }
+rand = { version = "0.8", default-features = false }
+
+# Test utilities.
+hex = "0.4"
+proptest = "1"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+
+[profile.dev]
+opt-level = 1  # without this, Halo2 proving in dev mode is unusably slow

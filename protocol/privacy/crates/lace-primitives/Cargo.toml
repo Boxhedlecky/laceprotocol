@@ -1,0 +1,21 @@
+[package]
+name = "lace-primitives"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Lace privacy layer -- field, hash, and key-derivation primitives"
+
+[dependencies]
+halo2curves.workspace = true
+ff.workspace = true
+group.workspace = true
+subtle.workspace = true
+blake2.workspace = true
+rand_core.workspace = true
+
+[dev-dependencies]
+hex.workspace = true
+rand = { workspace = true, features = ["std", "std_rng"] }
