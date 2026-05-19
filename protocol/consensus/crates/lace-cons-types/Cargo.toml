@@ -1,0 +1,13 @@
+[package]
+name = "lace-cons-types"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Common identifier and value types for the Lace consensus mechanism."
+authors.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+hex = { workspace = true }

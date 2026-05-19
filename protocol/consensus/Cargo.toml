@@ -1,0 +1,67 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/lace-cons-types",
+    "crates/lace-cons-pos",
+    "crates/lace-cons-fork-choice",
+    "crates/lace-cons-slashing",
+    "crates/lace-cons-rewards",
+    "crates/lace-cons-zk-exec",
+    "crates/lace-cons-da",
+    "crates/lace-cons-bridge",
+    "crates/lace-cons-node",
+    "crates/lace-cons-devnet",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.95"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/Boxhedlecky/laceprotocol"
+description = "Lace Protocol -- consensus mechanism"
+authors = ["Lace Protocol contributors"]
+
+[workspace.dependencies]
+# Stable serialisation of block headers, validator records, slashing
+# evidence, and devnet genesis files.
+serde = { version = "1", default-features = false, features = ["derive", "alloc"] }
+serde_json = "1"
+
+# Opaque 32-byte identifiers (block id, validator id, state root, DA
+# commitment). Same shape as every other component's `Bytes32`.
+hex = "0.4"
+
+# Property tests for fork-choice monotonicity, reward conservation,
+# slashing-split invariants, and DA-sample soundness.
+proptest = "1"
+
+# Async runtime for the in-process devnet simulator and node binaries.
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "sync", "time"] }
+
+# Structured logging for devnet observability.
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+
+# Argument parsing for the node and devnet binaries.
+clap = { version = "4", features = ["derive"] }
+
+# Internal crates.
+lace-cons-types       = { path = "crates/lace-cons-types" }
+lace-cons-pos         = { path = "crates/lace-cons-pos" }
+lace-cons-fork-choice = { path = "crates/lace-cons-fork-choice" }
+lace-cons-slashing    = { path = "crates/lace-cons-slashing" }
+lace-cons-rewards     = { path = "crates/lace-cons-rewards" }
+lace-cons-zk-exec     = { path = "crates/lace-cons-zk-exec" }
+lace-cons-da          = { path = "crates/lace-cons-da" }
+lace-cons-bridge      = { path = "crates/lace-cons-bridge" }
+lace-cons-node        = { path = "crates/lace-cons-node" }
+lace-cons-devnet      = { path = "crates/lace-cons-devnet" }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+
+[profile.dev]
+opt-level = 1
