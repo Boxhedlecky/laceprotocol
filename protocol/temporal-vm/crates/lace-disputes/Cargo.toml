@@ -1,0 +1,16 @@
+[package]
+name = "lace-disputes"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Lace temporal VM -- abort, dispute, and slashing logic"
+
+[dependencies]
+lace-time.workspace = true
+lace-vm.workspace = true
+lace-conditions.workspace = true
+lace-contracts.workspace = true
+serde = { workspace = true, features = ["derive"] }

@@ -1,0 +1,15 @@
+[package]
+name = "lace-time"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Lace temporal VM -- time, duration, and interval primitives"
+
+[dependencies]
+serde = { workspace = true, features = ["derive"] }
+
+[dev-dependencies]
+proptest.workspace = true

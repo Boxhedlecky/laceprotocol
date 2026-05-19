@@ -1,0 +1,44 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/lace-time",
+    "crates/lace-vm",
+    "crates/lace-conditions",
+    "crates/lace-contracts",
+    "crates/lace-disputes",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.95"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/Boxhedlecky/laceprotocol"
+description = "Lace Protocol -- temporal VM"
+authors = ["Lace Protocol contributors"]
+
+[workspace.dependencies]
+# Stable serialisation for bytecode and contract state.
+serde = { version = "1", default-features = false, features = ["derive", "alloc"] }
+serde_bytes = "0.11"
+
+# Used for opaque 32-byte identifiers (addresses, oracle refs, condition hashes).
+hex = "0.4"
+
+# Test utilities.
+proptest = "1"
+
+# Internal crates referenced across the workspace.
+lace-time = { path = "crates/lace-time" }
+lace-vm = { path = "crates/lace-vm" }
+lace-conditions = { path = "crates/lace-conditions" }
+lace-contracts = { path = "crates/lace-contracts" }
+lace-disputes = { path = "crates/lace-disputes" }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+
+[profile.dev]
+opt-level = 1

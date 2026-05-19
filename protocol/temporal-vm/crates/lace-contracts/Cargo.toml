@@ -1,0 +1,15 @@
+[package]
+name = "lace-contracts"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Lace temporal VM -- P2P primitive contracts (escrow, recurring, milestone, deadman)"
+
+[dependencies]
+lace-time.workspace = true
+lace-vm.workspace = true
+lace-conditions.workspace = true
+serde = { workspace = true, features = ["derive"] }

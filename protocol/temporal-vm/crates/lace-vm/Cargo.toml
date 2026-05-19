@@ -1,0 +1,16 @@
+[package]
+name = "lace-vm"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Lace temporal VM -- bytecode, opcodes, executor, scheduler"
+
+[dependencies]
+lace-time.workspace = true
+serde = { workspace = true, features = ["derive"] }
+
+[dev-dependencies]
+proptest.workspace = true
