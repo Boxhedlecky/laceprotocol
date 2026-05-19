@@ -1,0 +1,18 @@
+[package]
+name = "lace-veil-governance"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Reputation-weighted governance: vote weight = staked LACE * Veil Score multiplier."
+authors.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+lace-veil-types = { workspace = true }
+lace-veil-score = { workspace = true }
+lace-veil-stake = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }

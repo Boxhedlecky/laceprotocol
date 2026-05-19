@@ -1,0 +1,17 @@
+[package]
+name = "lace-veil-lending"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Undercollateralised lending engine backed by Veil Score and LACE collateral."
+authors.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+lace-veil-types = { workspace = true }
+lace-veil-score = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }

@@ -1,0 +1,47 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/lace-veil-types",
+    "crates/lace-veil-score",
+    "crates/lace-veil-proofs",
+    "crates/lace-veil-attest",
+    "crates/lace-veil-stake",
+    "crates/lace-veil-lending",
+    "crates/lace-veil-governance",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.95"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/Boxhedlecky/laceprotocol"
+description = "Lace Protocol -- reputation and Veil Score system"
+authors = ["Lace Protocol contributors"]
+
+[workspace.dependencies]
+# Stable serialisation of score state, attestations, loans, stakes.
+serde = { version = "1", default-features = false, features = ["derive", "alloc"] }
+
+# Opaque 32-byte identifiers (address, attestation id, loan id, score commitment).
+hex = "0.4"
+
+# Property tests for score-update monotonicity and slashing invariants.
+proptest = "1"
+
+# Internal crates.
+lace-veil-types      = { path = "crates/lace-veil-types" }
+lace-veil-score      = { path = "crates/lace-veil-score" }
+lace-veil-proofs     = { path = "crates/lace-veil-proofs" }
+lace-veil-attest     = { path = "crates/lace-veil-attest" }
+lace-veil-stake      = { path = "crates/lace-veil-stake" }
+lace-veil-lending    = { path = "crates/lace-veil-lending" }
+lace-veil-governance = { path = "crates/lace-veil-governance" }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+
+[profile.dev]
+opt-level = 1
