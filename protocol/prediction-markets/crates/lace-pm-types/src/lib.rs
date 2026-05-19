@@ -19,7 +19,7 @@ use serde::{Deserialize, Serialize};
 /// A 32-byte opaque identifier. Same shape as the temporal-VM and
 /// privacy-layer `Bytes32`; used here for market ids, outcome ids,
 /// validator ids, and oracle references handed to other components.
-#[derive(Copy, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct Bytes32(pub [u8; 32]);
 
 impl Bytes32 {
@@ -51,7 +51,7 @@ impl From<[u8; 32]> for Bytes32 {
 
 /// A market identifier. Distinct nominal type from `Bytes32` so callers
 /// cannot accidentally pass an outcome where a market is expected.
-#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct MarketId(pub Bytes32);
 
 impl MarketId {
@@ -64,7 +64,7 @@ impl MarketId {
 /// An outcome identifier within a market. For binary markets, two
 /// canonical outcome ids exist (`YES` and `NO`); for multi-outcome
 /// markets the engine assigns one per branch.
-#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct OutcomeId(pub Bytes32);
 
 impl OutcomeId {
@@ -81,7 +81,7 @@ impl OutcomeId {
 
 /// A protocol participant. Could be a wallet, a validator, or a
 /// resolver; the prediction market engine does not care.
-#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct Address(pub Bytes32);
 
 impl Address {

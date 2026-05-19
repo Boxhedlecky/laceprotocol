@@ -12,3 +12,6 @@ authors.workspace = true
 serde = { workspace = true }
 lace-pm-types = { workspace = true }
 lace-pm-markets = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }

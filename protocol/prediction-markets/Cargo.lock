@@ -199,6 +199,7 @@ version = "0.1.0"
 dependencies = [
  "lace-pm-markets",
  "lace-pm-types",
+ "proptest",
  "serde",
 ]
 
